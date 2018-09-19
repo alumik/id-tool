@@ -66,11 +66,11 @@ class IDGeneratorTest(unittest.TestCase):
             IDGenerator(length=3, chars=['1', '2', '1'])
 
     def test_illegal_initial_length_mismatch(self):
-        with self.assertRaises(IDGenerator.IllegalInitialID):
+        with self.assertRaises(IDGenerator.IllegalIDFormat):
             IDGenerator(length=3, chars=['0', '1'], initial='11')
 
     def test_illegal_initial_chars_mismatch(self):
-        with self.assertRaises(IDGenerator.IllegalInitialID):
+        with self.assertRaises(IDGenerator.IllegalIDFormat):
             IDGenerator(length=3, chars=['0', '1'], initial='121')
 
 

@@ -68,10 +68,10 @@ class IDGenerator:
     def set_id(self, new_id):
         id_list = list(new_id)
         if self.length != len(id_list):
-            raise self.IllegalInitialID
+            raise self.IllegalIDFormat
         for i in range(0, self.length):
             if self.chars.index(id_list[i]) == -1:
-                raise self.IllegalInitialID
+                raise self.IllegalIDFormat
         self.current_id = list(id_list)
 
     def get_id(self):
@@ -80,7 +80,7 @@ class IDGenerator:
     class DuplicateChars(Exception):
         pass
 
-    class IllegalInitialID(Exception):
+    class IllegalIDFormat(Exception):
         pass
 
     class IDOutOfRange(Exception):
