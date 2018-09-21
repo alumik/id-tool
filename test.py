@@ -74,8 +74,8 @@ class IDGeneratorTest(unittest.TestCase):
             IDGenerator(length=3, chars=['0', '1'], initial='121')
 
     def test_negative_length(self):
-        with self.assertRaises(TypeError):
-            IDGenerator(length=-1, chars=['0', '1'], initial='121')
+        with self.assertRaises(ValueError):
+            IDGenerator(length=0, chars=['0', '1'], initial='121')
 
     def test_type_error_length(self):
         with self.assertRaises(TypeError):

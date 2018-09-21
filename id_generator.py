@@ -33,7 +33,7 @@ class IDGenerator:
         if not isinstance(length, int):
             raise TypeError(type_error_message('length', 'int'))
         if length < 1:
-            raise TypeError('\'length\' must be positive.')
+            raise ValueError('\'length\' must be positive.')
         if not chars:
             chars = self.__default_chars()
         else:
