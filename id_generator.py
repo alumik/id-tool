@@ -1,6 +1,10 @@
+def type_error_message(name, bound_type):
+    return 'Argument \'{}\' must be instance of \'{}\'.'.format(name, bound_type)
+
+
 class IDGenerator:
 
-    class CircleUniqueList:
+    class CircleUniqueSet:
 
         def __init__(self, initial):
             self.list = initial
@@ -26,18 +30,20 @@ class IDGenerator:
                 return -1
 
     def __init__(self, length, chars=None, initial=None):
-        if length < 1 or not isinstance(length, int):
-            raise TypeError('\'length\' must receive a positive int type argument.')
+        if not isinstance(length, int):
+            raise TypeError(type_error_message('length', 'int'))
+        if length < 1:
+            raise TypeError('\'length\' must be positive.')
         if not chars:
             chars = self.__default_chars()
         else:
             if not isinstance(chars, list):
-                raise TypeError('\'chars\' must receive a list type argument.')
+                raise TypeError(type_error_message('chars', 'list'))
             for i in range(0, len(chars) - 1):
                 for j in range(i + 1, len(chars)):
                     if chars[i] == chars[j]:
                         raise self.DuplicateChars
-        self.chars = self.CircleUniqueList(chars)
+        self.chars = self.CircleUniqueSet(chars)
         self.current_id = list()
         self.length = length
         if not initial:
@@ -71,7 +77,7 @@ class IDGenerator:
 
     def set_id(self, new_id):
         if not isinstance(new_id, str):
-            raise TypeError('\'new_id\' must receive a string type argument.')
+            raise TypeError(type_error_message('new_id', 'str'))
         id_list = list(new_id)
         if self.length != len(id_list):
             raise self.IllegalIDFormat
