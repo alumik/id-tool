@@ -23,6 +23,7 @@ from id_generator import IDGenerator
 - `initial`
 
     一个字符串，代表初始 ID
+
 ## 接口说明
 
 - `next()`

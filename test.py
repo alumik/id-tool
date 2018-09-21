@@ -73,6 +73,22 @@ class IDGeneratorTest(unittest.TestCase):
         with self.assertRaises(IDGenerator.IllegalIDFormat):
             IDGenerator(length=3, chars=['0', '1'], initial='121')
 
+    def test_negative_length(self):
+        with self.assertRaises(TypeError):
+            IDGenerator(length=-1, chars=['0', '1'], initial='121')
+
+    def test_type_error_length(self):
+        with self.assertRaises(TypeError):
+            IDGenerator(length='3', chars=['0', '1'], initial='121')
+
+    def test_type_error_chars(self):
+        with self.assertRaises(TypeError):
+            IDGenerator(length=3, chars='12', initial='121')
+
+    def test_type_error_initial(self):
+        with self.assertRaises(TypeError):
+            IDGenerator(length=3, chars=['0', '1'], initial=12)
+
 
 if __name__ == '__main__':
     unittest.main()
