@@ -44,7 +44,7 @@ class IDGenerator:
                     if chars[i] == chars[j]:
                         raise self.DuplicateChars
         self.chars = self.CircleSet(chars)
-        self.current_id = list()
+        self.current_id = []
         self.length = length
         if not initial:
             for i in range(length):
@@ -54,7 +54,7 @@ class IDGenerator:
 
     @staticmethod
     def __default_chars():
-        default_chars = list()
+        default_chars = []
         for char_ord in range(ord('0'), ord('9') + 1):
             default_chars.append(chr(char_ord))
         for char_ord in range(ord('a'), ord('z') + 1):
@@ -71,9 +71,10 @@ class IDGenerator:
         for i in range(self.length - 1, -1, -1):
             if carry:
                 carry = self.__next_char(i)
-        if carry:
-            raise self.IDOutOfRange
-        return self.get_id()
+        return {
+            'id': self.get_id(),
+            'carry': carry
+        }
 
     def set_id(self, new_id):
         if not isinstance(new_id, str):
@@ -93,7 +94,4 @@ class IDGenerator:
         pass
 
     class IllegalIDFormat(Exception):
-        pass
-
-    class IDOutOfRange(Exception):
         pass
