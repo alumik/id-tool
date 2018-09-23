@@ -4,7 +4,7 @@ def type_error_message(name, bound_type):
 
 class IDGenerator:
 
-    class CircleUniqueSet:
+    class CircleSet:
 
         def __init__(self, initial):
             self.list = initial
@@ -43,7 +43,7 @@ class IDGenerator:
                 for j in range(i + 1, len(chars)):
                     if chars[i] == chars[j]:
                         raise self.DuplicateChars
-        self.chars = self.CircleUniqueSet(chars)
+        self.chars = self.CircleSet(chars)
         self.current_id = list()
         self.length = length
         if not initial:
