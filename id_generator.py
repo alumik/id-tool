@@ -7,25 +7,25 @@ class IDGenerator:
     class CircleSet:
 
         def __init__(self, initial):
-            self.list = initial
+            self.__list = initial
 
         def next_of(self, char):
-            index = self.list.index(char) + 1
+            index = self.__list.index(char) + 1
             carry = False
-            if index == len(self.list):
+            if index == len(self.__list):
                 index = 0
                 carry = True
             return {
-                'char': self.list[index],
+                'char': self.__list[index],
                 'carry': carry
             }
 
         def get(self, index):
-            return self.list[index]
+            return self.__list[index]
 
         def index(self, char):
             try:
-                return self.list.index(char)
+                return self.__list.index(char)
             except ValueError:
                 return -1
 
@@ -43,12 +43,12 @@ class IDGenerator:
                 for j in range(i + 1, len(chars)):
                     if chars[i] == chars[j]:
                         raise self.DuplicateChars
-        self.chars = self.CircleSet(chars)
-        self.current_id = []
-        self.length = length
+        self.__chars = self.CircleSet(chars)
+        self.__current_id = []
+        self.__length = length
         if not initial:
             for i in range(length):
-                self.current_id.append(self.chars.get(0))
+                self.__current_id.append(self.__chars.get(0))
         else:
             self.set_id(initial)
 
@@ -62,13 +62,13 @@ class IDGenerator:
         return default_chars
 
     def __next_char(self, index):
-        current_char = self.current_id[index]
-        self.current_id[index] = self.chars.next_of(current_char)['char']
-        return self.chars.next_of(current_char)['carry']
+        current_char = self.__current_id[index]
+        self.__current_id[index] = self.__chars.next_of(current_char)['char']
+        return self.__chars.next_of(current_char)['carry']
 
     def next(self):
         carry = True
-        for i in range(self.length - 1, -1, -1):
+        for i in range(self.__length - 1, -1, -1):
             if carry:
                 carry = self.__next_char(i)
         return {
@@ -80,15 +80,15 @@ class IDGenerator:
         if not isinstance(new_id, str):
             raise TypeError(type_error_message('new_id', 'str'))
         id_list = list(new_id)
-        if self.length != len(id_list):
+        if self.__length != len(id_list):
             raise self.IllegalIDFormat
-        for i in range(0, self.length):
-            if self.chars.index(id_list[i]) == -1:
+        for i in range(0, self.__length):
+            if self.__chars.index(id_list[i]) == -1:
                 raise self.IllegalIDFormat
-        self.current_id = list(id_list)
+        self.__current_id = list(id_list)
 
     def get_id(self):
-        return ''.join(self.current_id)
+        return ''.join(self.__current_id)
 
     class DuplicateChars(Exception):
         pass
