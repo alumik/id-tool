@@ -1,8 +1,6 @@
-# TODO: 修改文档
-
 import unittest
 
-from id_manager import IDManager, IDGenerator
+from id_toolkit import IDManager, IDGenerator
 
 
 class IDGeneratorTest(unittest.TestCase):

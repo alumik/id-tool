@@ -1,4 +1,4 @@
-# ID 序列生成管理器
+# ID 工具包
 
 项目基于 [Python](https://www.python.org/) 语言制作。
 
@@ -7,7 +7,7 @@
 ## 引入模块
 
 ```python
-from id_manager import IDGenerator, IDManager
+from id_toolkit import IDGenerator, IDManager
 ```
 
 ## 构造参数
