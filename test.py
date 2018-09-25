@@ -1,3 +1,6 @@
+# TODO: 简化测试案例
+# TODO: 修改文档
+
 import unittest
 
 from id_manager import IDManager, IDGenerator
@@ -22,7 +25,7 @@ class IDGeneratorTest(unittest.TestCase):
         results = []
         for i in range(10):
             results.append(id_generator.next()['id'])
-        self.assertEqual(results, targets)
+        self.assertEqual(targets, results)
 
     def test_custom_length_and_chars(self):
         id_generator = IDGenerator(length=3, chars=['0', '1'])
@@ -30,7 +33,7 @@ class IDGeneratorTest(unittest.TestCase):
         results = []
         for i in range(7):
             results.append(id_generator.next()['id'])
-        self.assertEqual(results, targets)
+        self.assertEqual(targets, results)
 
     def test_chinese_chars_with_initial(self):
         id_generator = IDGenerator(
@@ -53,7 +56,7 @@ class IDGeneratorTest(unittest.TestCase):
         results = []
         for i in range(10):
             results.append(id_generator.next()['id'])
-        self.assertEqual(results, targets)
+        self.assertEqual(targets, results)
 
     def test_id_with_carry(self):
         id_generator = IDGenerator(length=2, chars=['0', '1'], initial='10')
@@ -89,56 +92,47 @@ class IDGeneratorTest(unittest.TestCase):
             IDGenerator(length=3, chars=['0', '1'], initial=12)
 
 
-class id_manageranagerTest(unittest.TestCase):
+class IDManagerTest(unittest.TestCase):
 
     def setUp(self):
-        id_generator = IDGenerator(length=2, chars=['0', '1'])
         self.id_manager = IDManager()
-        self.id_manager.add_id(id_generator)
+        self.id_manager.add_id(length=2, chars=['0', '1'], auto_increase=True)
+        self.id_manager.add_id(length=2, chars=['0', '1'], initial='11')
+        self.id_manager.add_separator('/')
+        self.id_manager.add_id(
+            length=2,
+            chars=['0', '1'],
+            auto_increase=True,
+            initial='11'
+        )
+        self.id_manager.add_separator('/')
+        self.id_manager.add_id(
+            length=2,
+            chars=['0', '1'],
+            auto_increase=True,
+            initial='11'
+        )
         self.id_manager.add_separator('-')
-        self.id_manager.add_id(id_generator)
-        id_generator = IDGenerator(length=2, chars=['0', '1'])
-        self.id_manager.add_id(id_generator)
-        self.id_manager.add_separator('-/')
-        self.id_manager.add_separator('-')
-        id_generator = IDGenerator(length=2, chars=['0', '1'])
-        self.id_manager.add_id(id_generator)
+        self.id_manager.add_id(length=2, chars=['0', '1'], initial='11')
 
-    def test_next(self):
-        self.id_manager.next()
-        self.assertEqual(self.id_manager.get_id(), '00-0000-/-01')
-        self.id_manager.next(1)
-        self.assertEqual(self.id_manager.get_id(), '01-0100-/-01')
-        self.id_manager.next()
-        self.id_manager.next()
-        self.id_manager.next()
-        self.assertEqual(self.id_manager.get_id(), '01-0100-/-00')
-        self.id_manager.next(2)
-        self.assertEqual(self.id_manager.get_id(), '01-0101-/-00')
+    def test_get_id(self):
+        self.assertEqual('0011/11/11-11', self.id_manager.get_id())
 
     def test_set_id(self):
-        self.id_manager.set_id(0, '11')
-        self.assertEqual(self.id_manager.get_id(), '11-1100-/-00')
-        self.id_manager.next(0)
-        self.assertEqual(self.id_manager.get_id(), '00-0000-/-00')
+        self.id_manager.set_id(1, '10')
+        self.assertEqual('0010/11/11-11', self.id_manager.get_id())
 
-    def test_next_with_carry_default(self):
-        id_manager = IDManager(True)
-        id_generator = IDGenerator(length=2, chars=['0', '1'], initial='11')
-        id_manager.add_id(id_generator)
-        id_manager.add_separator('-')
-        id_generator = IDGenerator(length=2, chars=['0', '1'], initial='11')
-        id_manager.add_id(id_generator)
-        id_manager.add_separator('-')
-        id_generator = IDGenerator(length=2, chars=['0', '1'], initial='11')
-        id_manager.add_id(id_generator)
-        id_manager.next()
-        self.assertEqual(id_manager.get_id(), '00-00-00')
-        id_manager.set_id(0, '11')
-        id_manager.set_id(1, '11')
-        id_manager.set_id(2, '11')
-        id_manager.next(1)
-        self.assertEqual(id_manager.get_id(), '00-00-11')
+    def test_next_auto_increase_default(self):
+        self.id_manager.next()
+        self.assertEqual('0011/00/00-00', self.id_manager.get_id())
+
+    def test_next_auto_increase_not_default(self):
+        self.id_manager.next(3)
+        self.assertEqual('0011/00/00-11', self.id_manager.get_id())
+
+    def test_next_not_auto_increase(self):
+        self.id_manager.next(1)
+        self.assertEqual('0100/11/11-11', self.id_manager.get_id())
 
 
 if __name__ == '__main__':
