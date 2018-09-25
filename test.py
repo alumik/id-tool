@@ -1,4 +1,3 @@
-# TODO: 简化测试案例
 # TODO: 修改文档
 
 import unittest
@@ -8,88 +7,66 @@ from id_manager import IDManager, IDGenerator
 
 class IDGeneratorTest(unittest.TestCase):
 
-    def test_default_with_initial(self):
-        id_generator = IDGenerator(length=6, initial='01209v')
-        targets = [
-            '01209w',
-            '01209x',
-            '01209y',
-            '01209z',
-            '0120a0',
-            '0120a1',
-            '0120a2',
-            '0120a3',
-            '0120a4',
-            '0120a5'
-        ]
+    def test_default_chars_without_initial(self):
+        id_generator = IDGenerator(length=2)
+        targets = ['01', '02', '03', '04']
         results = []
-        for i in range(10):
+        for i in range(4):
             results.append(id_generator.next()['id'])
         self.assertEqual(targets, results)
 
-    def test_custom_length_and_chars(self):
-        id_generator = IDGenerator(length=3, chars=['0', '1'])
-        targets = ['001', '010', '011', '100', '101', '110', '111']
+    def test_default_chars_with_initial(self):
+        id_generator = IDGenerator(length=6, initial='01209x')
+        targets = ['01209y', '01209z', '0120a0', '0120a1']
         results = []
-        for i in range(7):
+        for i in range(4):
             results.append(id_generator.next()['id'])
         self.assertEqual(targets, results)
 
-    def test_chinese_chars_with_initial(self):
+    def test_custom_chars(self):
         id_generator = IDGenerator(
-            length=3,
-            chars=['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'],
-            initial='一二零'
+            length=2,
+            chars=['〇', '一', '二', '三', '四', '五', '六', '七', '八', '九'],
+            initial='一七'
         )
-        targets = [
-            '一二一',
-            '一二二',
-            '一二三',
-            '一二四',
-            '一二五',
-            '一二六',
-            '一二七',
-            '一二八',
-            '一二九',
-            '一三零'
-        ]
+        targets = ['一八', '一九', '二〇', '二一']
         results = []
-        for i in range(10):
+        for i in range(4):
             results.append(id_generator.next()['id'])
         self.assertEqual(targets, results)
 
-    def test_id_with_carry(self):
+    def test_carry(self):
         id_generator = IDGenerator(length=2, chars=['0', '1'], initial='10')
         self.assertFalse(id_generator.next()['carry'])
         self.assertTrue(id_generator.next()['carry'])
 
     def test_duplicate_chars(self):
         with self.assertRaises(IDGenerator.DuplicateChars):
-            IDGenerator(length=3, chars=['1', '2', '1'])
+            IDGenerator(length=2, chars=['1', '2', '1'])
 
     def test_illegal_initial_length_mismatch(self):
         with self.assertRaises(IDGenerator.IllegalIDFormat):
-            IDGenerator(length=3, chars=['0', '1'], initial='11')
+            IDGenerator(length=2, chars=['0', '1'], initial='001')
 
     def test_illegal_initial_chars_mismatch(self):
         with self.assertRaises(IDGenerator.IllegalIDFormat):
-            IDGenerator(length=3, chars=['0', '1'], initial='121')
+            IDGenerator(length=2, chars=['0', '1'], initial='12')
 
-    def test_negative_length(self):
+    def test_length_not_positive(self):
         with self.assertRaises(ValueError):
-            IDGenerator(length=0, chars=['0', '1'], initial='121')
+            IDGenerator(length=0, chars=['0', '1'])
 
     def test_type_error_length(self):
         with self.assertRaises(TypeError):
-            IDGenerator(length='3', chars=['0', '1'], initial='121')
+            IDGenerator(length='2')
 
     def test_type_error_chars(self):
         with self.assertRaises(TypeError):
-            IDGenerator(length=3, chars='12', initial='121')
+            IDGenerator(length=2, chars='12')
 
     def test_type_error_initial(self):
         with self.assertRaises(TypeError):
-            IDGenerator(length=3, chars=['0', '1'], initial=12)
+            IDGenerator(length=2, initial=12)
 
 
 class IDManagerTest(unittest.TestCase):
