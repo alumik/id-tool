@@ -25,12 +25,6 @@ from id_manager import IDGenerator, IDManager
 - `initial=None`
 
     一个字符串，代表初始 ID。
-    
-### IDManager
-
-- `auto_increase=False`
-
-    一个 bool ，表示是否要在不同的 ID 之间自动进位（例如“0-9”+1=“1-0”为自动进位，例如“0-9”+1=“0-0”为不自动进位）。
 
 ## 接口说明
 
@@ -50,9 +44,9 @@ from id_manager import IDGenerator, IDManager
    
 ### IDManager
 
-- `add_id(id_generator)`
+- `add_id(length, chars=None, initial=None, auto_increase=False)`
 
-    给 ID 管理器添加一个 IDGenerator。
+    给 ID 管理器添加一个 ID 。 `length` / `chars` / `initial` 的定义与 `IDGenerator` 中的一样， `auto_increase` 代表该位是否会由于低位进位而自动增长。
     
 - `add_separator(separator)`
 
