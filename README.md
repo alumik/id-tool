@@ -1,6 +1,6 @@
 # ID 工具包
 
-项目基于 [Python](https://www.python.org/) 语言制作。
+项目基于 [Python](https://www.python.org/) 制作。
 
 # 说明
 
@@ -41,25 +41,25 @@ from id_toolkit import IDGenerator, IDManager
 - `set_id(new_id)`
 
     设置当前 ID。
-   
+
 ### IDManager
 
 - `add_id(length, chars=None, initial=None, auto_increase=False)`
 
     给 ID 管理器添加一个 ID 。 `length` / `chars` / `initial` 的定义与 `IDGenerator` 中的一样， `auto_increase` 代表该位是否会由于低位进位而自动增长。
-    
+
 - `add_separator(separator)`
 
     给 ID 管理器添加一个 str 作为分隔符。
-    
+
 - `next(index=None)`
 
     对指定位置的 ID 进行进位。
-    
+
 - `set_id(index, new_id)`
 
     更改指定位置的 ID。
-    
+
 - `get_id()`
 
     返回当前 ID。
