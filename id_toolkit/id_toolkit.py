@@ -3,7 +3,6 @@ def type_error_message(name, bound_type):
 
 
 class IDGenerator:
-
     class CircleSet:
 
         def __init__(self, initial):
