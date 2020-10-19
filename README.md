@@ -7,7 +7,7 @@
 ## 引入模块
 
 ```python
-import id_toolkit
+import idtool
 ```
 
 ## 构造参数
