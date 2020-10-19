@@ -1,9 +1,5 @@
 # ID 工具包
 
-项目基于 [Python](https://www.python.org/) 制作。
-
-# 说明
-
 ## 引入模块
 
 ```python
@@ -12,64 +8,64 @@ import idtool
 
 ## 构造参数
 
-### IDGenerator
+### idtool.IDGenerator
 
-- `length`
+- `length: int = None`
 
-    一个 int ，代表 ID 字符位数。
+    等宽 ID 字符位数。为空表示不限制位数。
 
-- `chars=None`
+- `chars: typing.Sequence = None`
 
-    一个无重复字符列表，代表 ID 字符序列（例如 ['1', '2', '3'] ）。默认值为 ['0', '1', ..., '9', 'a', 'b', ..., 'z'] 。
+    ID 字符序列（例如 ['1', '2', '3'] ）。默认值为 ['0', '1', ..., '9', 'a', 'b', ..., 'z']。
 
-- `initial=None`
+- `initial: str = None`
 
-    一个字符串，代表初始 ID。
+    初始 ID。
 
 ## 接口说明
 
-### IDGenerator
+### idtool.IDGenerator
 
-- `id_toolkit.IDGenerator.next()`
+- `idtool.IDGenerator.next() -> bool`
 
-    生成并返回下一个 ID。
+    生成下一个 ID 并返回是否有进位。
 
-- `id_toolkit.IDGenerator.get_id()`
+- `idtool.IDGenerator.get_id() -> str`
 
     返回当前 ID。
 
-- `id_toolkit.IDGenerator.set_id(new_id)`
+- `idtool.IDGenerator.set_id(new_id: str)`
 
     设置当前 ID。
 
-### IDManager
+### idtool.IDManager
 
-- `id_toolkit.IDManager.add_id(length, chars=None, initial=None, auto_increase=False)`
+- `idtool.IDManager.add_id(generator: idtool.IDGenerator, auto_increase: bool = False)`
 
-    给 ID 管理器添加一个 ID 。 `length` / `chars` / `initial` 的定义与 `IDGenerator` 中的一样， `auto_increase` 代表该位是否会由于低位进位而自动增长。
+    给 ID 管理器添加一个 ID 。 `auto_increase` 代表该位是否会由于低位进位而自动增长。
 
-- `id_toolkit.IDManager.add_separator(separator)`
+- `idtool.IDManager.add_separator(separator: str)`
 
     给 ID 管理器添加一个 str 作为分隔符。
 
-- `id_toolkit.IDManager.next(index=None)`
+- `idtool.IDManager.next(index: int = None)`
 
     对指定位置的 ID 进行进位。
 
-- `id_toolkit.IDManager.set_id(index, new_id)`
+- `idtool.IDManager.set_id(index: int, new_id: str)`
 
     更改指定位置的 ID。
 
-- `id_toolkit.IDManager.get_id()`
+- `idtool.IDManager.get_id() -> str`
 
     返回当前 ID。
 
 ## 异常
 
-- `id_toolkit.IDGenerator.DuplicateChars`
+- `idtool.IDGenerator.DuplicateChars`
 
     字符序列存在重复字符。
 
-- `id_toolkit.IDGenerator.IllegalIDFormat`
+- `idtool.IDGenerator.IllegalIDFormat`
 
     要设置的 ID 格式不正确。
