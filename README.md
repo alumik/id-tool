@@ -1,6 +1,8 @@
 # ID 工具包
 
+![python-3.6-3.7-3.8-3.9](https://img.shields.io/badge/python-3.6%20%7C%203.7%20%7C%203.8%20%7C%203.9-blue)
 ![version-2.1.0](https://img.shields.io/badge/version-2.1.0-blue)
+[![license-MIT](https://img.shields.io/badge/license-MIT-green)](https://github.com/AlumiK/id-tool/blob/main/LICENSE)
 
 ## 引入模块
 
